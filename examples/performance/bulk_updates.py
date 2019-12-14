@@ -89,22 +89,22 @@ def test_orm_bulk_update_mappings(n):
     # print(len(session.query(Customer).all()))
     # print(len(session.query(Customer).filter(Customer.description=="updated").all()))
 
-# @Profiler.profile
-# def test_orm_bulk_save_objects(n):
-#     '''Update statements via orm bulk_save_objects() method'''
-#     session = Session(bind=engine)
-#     for chunk in range(0, n, 1000):
-#         session.bulk_save_objects(
-#             [
-#                 Customer(**{
-#                     "name": "customer name %d" % i,
-#                     "description": "updated",
-#                 })
-#                 for i in range(chunk, chunk + 1000)
-#             ]
-#         )
-#         session.flush()
-#     session.commit()
+@Profiler.profile
+def test_orm_bulk_save_objects(n):
+    '''Update statements via orm bulk_save_objects() method'''
+    session = Session(bind=engine)
+    for chunk in range(0, n, 1000):
+        session.bulk_save_objects(
+            [
+                Customer(**{
+                    "name": "customer name %d" % i,
+                    "description": "updated",
+                })
+                for i in range(chunk, chunk + 1000)
+            ]
+        )
+        session.flush()
+    session.commit()
 
 @Profiler.profile
 def test_orm_update(n):

@@ -12,7 +12,7 @@ from sqlalchemy import pool
 from sqlalchemy import String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
-from . import Profiler
+from performance import Profiler
 
 
 Base = declarative_base()
@@ -26,7 +26,7 @@ class Customer(Base):
     description = Column(String(255))
 
 
-Profiler.init("single_inserts", num=10000)
+Profiler.init("single_inserts", num=1000)
 
 
 @Profiler.setup
