@@ -343,8 +343,8 @@ class Profiler(object):
         parser.add_argument(
             "--dburl",
             type=str,
-            default="sqlite:///profile.db",
-            # default="mysql+pymysql://root:adminadmin@localhost/test",
+            # default="sqlite:///profile.db",
+            default="mysql+pymysql://root:adminadmin@localhost/test",
             help="database URL, default sqlite:///profile.db",
         )
         parser.add_argument(

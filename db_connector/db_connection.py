@@ -105,3 +105,26 @@ class DBConnection(object):
                 s,
                 mappings[chunk: chunk + chunk_size],
             )
+
+    def bulk_update(self, mapper, mappings, chunk_size=None):
+        """Update statements via core bulk_update_mappings() method'"""
+        if not chunk_size:
+            chunk_size = len(mappings)
+        for chunk in range(0, len(mappings), chunk_size):
+            self.db_session.bulk_update_mappings(
+                mapper,
+                mappings,
+            )
+            self.db_session.flush()
+        self.db_session.commit()
+
+    def bulk_insert(self, mapper, mappings, chunk_size=None):
+        """A single Core INSERT construct inserting mappings in bulk."""
+        if not chunk_size:
+            chunk_size = len(mappings)
+        conn = self.db_engine.connect()
+        for chunk in range(0, len(mappings), chunk_size):
+            conn.execute(
+                mapper.__table__.insert(),
+                mappings[chunk:chunk + chunk_size],
+            )
